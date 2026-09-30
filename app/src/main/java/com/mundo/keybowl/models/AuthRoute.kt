@@ -1,4 +1,4 @@
-package com.mundo.keybowl.route
+package com.mundo.keybowl.models
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -9,6 +9,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun AuthRoute(
+    onNavigateToHome: () -> Unit,
     authViewModel: AuthViewModel = koinViewModel()
 ) {
     val isLoading by authViewModel.isLoading.collectAsState()
@@ -16,7 +17,7 @@ fun AuthRoute(
 
     AuthScreen(
         onLoginClick = { email, password ->
-            authViewModel.login(email, password)
+            authViewModel.login(email, password, onNavigateToHome)
         },
         isLoading = isLoading,
         errorMessage = errorMessage

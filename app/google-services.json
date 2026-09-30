@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "880989976019",
+    "firebase_url": "https://keylock-95c3f-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "keylock-95c3f",
+    "storage_bucket": "keylock-95c3f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880989976019:android:b2588f291a5be03921ab26",
+        "android_client_info": {
+          "package_name": "com.example.testprojet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ6he1Tzk_-2WsFe-9duPWZeSpSC-r3YM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:880989976019:android:a5c138f269137c3421ab26",
+        "android_client_info": {
+          "package_name": "com.mundo.keybowl"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ6he1Tzk_-2WsFe-9duPWZeSpSC-r3YM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
