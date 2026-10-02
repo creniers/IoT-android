@@ -1,5 +1,6 @@
 [versions]
 agp = "9.4.1"
+biometric = "1.2.0-alpha05"
 coreKtx = "1.19.0"
 firebaseBom = "34.19.0"
 junit = "4.13.2"
@@ -11,10 +12,13 @@ kotlin = "2.2.10"
 composeBom = "2026.02.01"
 navigation3Ui = "1.2.0"
 koin-bom = "4.1.1"
+securityCrypto = "1.1.0"
 
 [libraries]
+androidx-biometric = { module = "androidx.biometric:biometric", version.ref = "biometric" }
 androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
 firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-database = { module = "com.google.firebase:firebase-database" }

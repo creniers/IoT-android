@@ -3,6 +3,7 @@ package com.mundo.keybowl.screen
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Fingerprint
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Visibility
@@ -11,21 +12,29 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentActivity
+import com.mundo.keybowl.utils.SecureStorage
+import com.mundo.keybowl.viewmodel.AuthViewModel
+import org.koin.androidx.compose.koinViewModel
+import androidx.compose.runtime.collectAsState
 
 @Composable
 fun AuthScreen(
-    onLoginClick: (email: String, pass: String) -> Unit,
-    isLoading: Boolean = false,
-    errorMessage: String? = null
+    viewModel: AuthViewModel = koinViewModel(),
+    onNavigateToHome: () -> Unit
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
+
+    val context = LocalContext.current
+    val activity = context as? FragmentActivity
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -90,10 +99,10 @@ fun AuthScreen(
                 )
             )
 
-            if (errorMessage != null) {
+            if (viewModel.errorMessage.collectAsState().value != null) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = errorMessage,
+                    text = viewModel.errorMessage.toString(),
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall
                 )
@@ -101,21 +110,39 @@ fun AuthScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            Button(
-                onClick = { onLoginClick(email, password) },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                enabled = !isLoading && email.isNotBlank() && password.isNotBlank()
-            ) {
-                if (isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.size(24.dp),
-                        color = MaterialTheme.colorScheme.onPrimary,
-                        strokeWidth = 2.dp
-                    )
-                } else {
-                    Text("Se connecter", style = MaterialTheme.typography.titleMedium)
+            Row() {
+                if (viewModel.checkCredentials()) {
+                    OutlinedButton(
+                        onClick = { viewModel.handleBiometry(activity, onNavigateToHome) },
+                        modifier = Modifier
+                            .height(50.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Fingerprint,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
+
+                Button(
+                    onClick = { viewModel.login(email, password, onNavigateToHome) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(50.dp),
+                    enabled = !viewModel.isLoading.collectAsState().value && email.isNotBlank() && password.isNotBlank()
+                ) {
+                    if (viewModel.isLoading.collectAsState().value) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = MaterialTheme.colorScheme.onPrimary,
+                            strokeWidth = 2.dp
+                        )
+                    } else {
+                        Text("Se connecter", style = MaterialTheme.typography.titleMedium)
+                    }
                 }
             }
         }

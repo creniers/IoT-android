@@ -68,4 +68,8 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
+
+    // Biometry
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.security.crypto)
 }

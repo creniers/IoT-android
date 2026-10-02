@@ -1,19 +1,19 @@
 package com.mundo.keybowl
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.fragment.app.FragmentActivity
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.NavEntry
 import androidx.navigation3.ui.NavDisplay
 import com.mundo.keybowl.models.Routes
-import com.mundo.keybowl.models.AuthRoute
-import com.mundo.keybowl.models.HomeRoute
+import com.mundo.keybowl.screen.AuthScreen
+import com.mundo.keybowl.screen.HomeScreen
 import com.mundo.keybowl.ui.theme.KeyBowlTheme
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     entryProvider = { key ->
                         when (key) {
                             Routes.AuthRoute -> NavEntry(key) {
-                                AuthRoute(
+                                AuthScreen(
                                     onNavigateToHome = {
                                         backStack.clear()
                                         backStack.add(Routes.HomeRoute)
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             Routes.HomeRoute -> NavEntry(key) {
-                                HomeRoute()
+                                HomeScreen()
                             }
                         }
                     }
